@@ -4,6 +4,10 @@ from datetime import datetime
 
 
 class Extracter:
+    """Just load html file to data/ directory.
+    Extracter adds timestamp. Extract method downloads page
+    (if to_file is set method save data to file) and
+    return raw text."""
     def __init__(self, url):
         self.logger = get_logger(type(self).__name__)
         self.url = url

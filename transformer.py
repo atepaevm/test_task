@@ -6,6 +6,12 @@ from logger import get_logger
 import re
 
 class Transformer:
+    """
+    Transormer cat get html data from two sources:
+    1) as argument of transform
+    2) if argument is None, transform method get most recent file from data/
+    return pandasDataFrame
+    """
     def __init__(self):
         self.logger = get_logger(type(self).__name__)
         self.df = pd.DataFrame()
@@ -14,7 +20,8 @@ class Transformer:
                                              'INS_HOLD', 'INS_SELL', 'INS_BUY'])
 
     def preprocess(self, soup, to_excel=True):
-
+        """Get soup and return DataFrame. If to_excel is set,
+        preprocess method saves DataFrame to xlsx-file"""
         table = soup.find("table", {"class": "scroll-table sort-table"})
         columns = [th.text for th in table.find_all('th')]
         data = []
@@ -39,6 +46,8 @@ class Transformer:
         self.logger.info("success")
 
     def stat(self, to_excel=True):
+        """Uses DataFrame table and generates statistics.
+        If to_excel is set, method saves DataFrame to xlsx file."""
         l = []
         for d in sorted(self.df['Date'].unique(), reverse=True):
             tmp_df = self.df[self.df['Date'] == d]
@@ -59,6 +68,7 @@ class Transformer:
         return self.stat_df
 
     def transform(self, text=None):
+        """Just a wrapper"""
         if text is None:
             path = sorted(os.listdir('data'),
                                  key=lambda path: os.path.getmtime('data/' + path))[0]

@@ -3,6 +3,7 @@ import pandas as pd
 
 
 class Loader:
+    """Dummy of DB connection"""
     def __init__(self):
         self.logger = get_logger(type(self).__name__)
 
@@ -27,4 +28,4 @@ class Loader:
 
 if __name__ == '__main__':
     df = pd.read_excel('data/stat.xlsx').set_index('Unnamed: 0')
-    l = Loader().load(df)
+    Loader().load(df)
