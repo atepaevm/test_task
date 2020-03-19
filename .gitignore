@@ -1,6 +1,3 @@
 venv/*
-logs/*
-data/*
-export/*
 __pycache__/*
 .idea/*

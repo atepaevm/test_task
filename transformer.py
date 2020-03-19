@@ -41,6 +41,7 @@ class Transformer:
             row[4] = None if match is None else float(match.group(0))
             data.append(row)
         self.df = pd.DataFrame(data, columns=columns)
+        self.df['Price Target'].fillna(0, inplace=True)
         if to_excel:
             self.df.to_excel('export/data.xlsx')
         self.logger.info("success")
@@ -89,6 +90,7 @@ if __name__ == '__main__':
     most_recent = sorted(os.listdir('data'),
                          key=lambda path: os.path.getmtime('data/' + path))[0]
     t = Transformer()
-    with open('data/' + most_recent, 'r') as f:
-        print(t.transform(f.read()))
 
+    with open('data/' + most_recent, 'r') as f:
+        t.logger.info(t.transform(f.read()))
+        t.stat_df.to_excel('export/stat.xlsx')

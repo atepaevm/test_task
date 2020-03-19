@@ -8,24 +8,15 @@ class Loader:
         self.logger = get_logger(type(self).__name__)
 
     def load(self, df):
-        for index, row in df.iterrows():
-            item = {
-                        row['Date']:
-                            {
-                                'AMT_HOLD': row['AMT_HOLD'],
-                                'AMT_SELL': row['AMT_SELL'],
-                                'AMT_BUY': row['AMT_BUY'],
-                                'INS_HOLD': row['INS_HOLD'],
-                                'INS_SELL': row['INS_SELL'],
-                                'INS_BUY': row['INS_BUY'],
-                            }
-                    }
-            print(item)
+        # get list of dicts like {'date': ..., 'AMT_HOLD': ...}
+        data = [row.to_dict() for _, row in df.iterrows()]
+        for item in data:
+            """insert in DB"""
             self.logger.info(item)
         self.logger.info("success")
         return
 
 
 if __name__ == '__main__':
-    df = pd.read_excel('data/stat.xlsx').set_index('Unnamed: 0')
+    df = pd.read_excel('export/stat.xlsx').set_index('Unnamed: 0')
     Loader().load(df)
