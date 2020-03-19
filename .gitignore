@@ -1,3 +1,9 @@
 venv/*
 __pycache__/*
+data/*
+export/*
+logs/*
+!data/dummy_data_to_git.it
+!logs/dummy_log_to_git.it
+!export/dummy_export_to_git.it
 .idea/*
